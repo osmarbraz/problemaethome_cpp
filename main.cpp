@@ -19,11 +19,11 @@ inline bool procuraCharSet(std::set<char> vet, char chave) {
  */
 void imprimirMatrizSet(std::vector<std::vector<std::set<char>>> M, int linhas, int colunas) {
     std::set<char> ::iterator iterador;
-    for (int l = 0; l < linhas; l++) {
-        for (int c = 0; c < colunas; c++) {
-            if (M[l][c].size() > 0) {
+    for (int i = 0; i < linhas; ++i) {
+        for (int j = 0; j < colunas; j++) {
+            if (M[i][j].size() > 0) {
                 std::cout << " ";
-                for (iterador = M[l][c].begin(); iterador != M[l][c].end(); ++iterador) {
+                for (iterador = M[i][j].begin(); iterador != M[i][j].end(); ++iterador) {
                     std::cout << *iterador;
                 }
                 std::cout << "\t";
@@ -41,7 +41,7 @@ void imprimirMatrizSet(std::vector<std::vector<std::set<char>>> M, int linhas, i
  */
 inline std::set<char> verificaMenorSubcadeiaSet(std::string cadeia, std::vector<std::vector<char>> regras, int caracterCadeia) {
     std::set<char> resp;
-    for (int i = 0; i < regras.size(); i++) {
+    for (int i = 0; i < regras.size(); ++i) {
         if (regras[i][1] == cadeia[caracterCadeia]) {
             resp.insert(regras[i][0]);
         }
@@ -63,17 +63,17 @@ inline bool validaCadeia(std::string raiz, std::vector<char> naoTerminais, std::
     std::vector<std::vector<std::set<char>>> tabela(n, std::vector<std::set<char>>(n));
 
     //Preenche a diagonal principal
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; ++i) {
         tabela[i][i] = rt[cadeia[i]];
     }
 
 //    imprimirMatrizSet(tabela, n, n);
 
-    for (int i = 2; i <= n; i++) {
-        for (int inicio = 0; inicio <= n - i; inicio++) {
+    for (int i = 2; i <= n; ++i) {
+        for (int inicio = 0; inicio <= n - i; ++inicio) {
             int fim = inicio + i - 1;
-            for (int meio = inicio; meio <= fim - 1; meio++) {
-                for (int m = 0; m < qrnt; m++) {
+            for (int meio = inicio; meio <= fim - 1; ++meio) {
+                for (int m = 0; m < qrnt; ++m) {
                     if (procuraCharSet(tabela[inicio][meio], regrasNaoTerminais[m][1])) {
                         if (procuraCharSet(tabela[meio + 1][fim], regrasNaoTerminais[m][2])) {
                             //Adiciona o não terminal da regra na lista 
@@ -92,7 +92,7 @@ inline bool validaCadeia(std::string raiz, std::vector<char> naoTerminais, std::
 inline void testarCadeias(int instancia, std::string raiz, std::vector<char> naoTerminais, std::vector<char> terminais, std::vector<std::vector<char>> regras, std::vector<std::string> cadeias, std::set<char> rt[], char rnt[][255], std::vector<std::vector<char>> regrasTerminais, std::vector<std::vector<char>> regrasNaoTerminais) {
     //mensagem de saída
     std::cout << "Instancia " << instancia << std::endl;
-    for (int i = 0; i < cadeias.size(); i++) {
+    for (int i = 0; i < cadeias.size(); ++i) {
 
         if (validaCadeia(raiz, naoTerminais, terminais, regras, cadeias[i], rt, rnt, regrasTerminais, regrasNaoTerminais)) {
             std::cout << cadeias[i] << " e uma palavra valida" << std::endl;
@@ -145,14 +145,14 @@ int main(int argc, char** argv) {
 
         //leitura dos não terminais
         getline(cin, linha);
-        for (int i = 0; i < linha.size(); i++) {
+        for (int i = 0; i < linha.size(); ++i) {
             naoTerminais.push_back(linha[i]);
         }
         linha = "";
 
         //leitura dos terminais
         getline(cin, linha);
-        for (int i = 0; i < linha.size(); i++) {
+        for (int i = 0; i < linha.size(); ++i) {
             terminais.push_back(linha[i]);
         }
         linha = "";
@@ -201,12 +201,12 @@ int main(int argc, char** argv) {
         testarCadeias(instancia, raiz, naoTerminais, terminais, regras, cadeias, rt, rnt, regrasTerminais, regrasNaoTerminais);
 
         //Limpa terminais
-        for (int i = 0; i < regrasTerminais.size(); i++) {
+        for (int i = 0; i < regrasTerminais.size(); ++i) {
             rt[regrasTerminais[i][1]].clear();
         }
 
         //Limpa nao terminais                
-        for (int i = 0; i < regrasNaoTerminais.size(); i++) {
+        for (int i = 0; i < regrasNaoTerminais.size(); ++i) {
             rnt[regrasNaoTerminais[i][1]][regrasNaoTerminais[i][2]] = -1;
         }
 
