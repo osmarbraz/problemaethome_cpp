@@ -6,6 +6,9 @@
 #include <algorithm>
 #include <ctime>
 
+/**
+ * Calcular o tempo de execução.
+ */
 class Cronometro {
 private:
     long valorInicio;
@@ -60,12 +63,12 @@ void imprimirMatrizSet(std::vector<std::vector<std::set<char>>> M, int linhas, i
 }
 
 /**
- * Procura a menor subcadeia em um set
+ * Retorna a lista de terminais possiveis para uma posição da cadeia.
  */
-inline std::set<char> verificaMenorSubcadeiaSet(std::string cadeia, std::vector<std::vector<char>> regras, int caracterCadeia) {
+inline std::set<char> verificaMenorSubcadeiaSet(std::string cadeia, std::vector<std::vector<char>> regras, int posicao) {
     std::set<char> resp;
     for (int i = 0; i < regras.size(); ++i) {
-        if (regras[i][1] == cadeia[caracterCadeia]) {
+        if (regras[i][1] == cadeia[posicao]) {
             resp.insert(regras[i][0]);
         }
     }
@@ -108,10 +111,12 @@ inline bool validaCadeia(std::string raiz, std::vector<char> naoTerminais, std::
         }
     }
     //imprimirMatriz(tabela, n, n);
-
     return procuraCharSet(tabela[0][n - 1], raiz[0]);
 }
 
+/**
+ * Percorre a lista de cadeias a serem testadas.
+ */
 inline void testarCadeias(int instancia, std::string raiz, std::vector<char> naoTerminais, std::vector<char> terminais, std::vector<std::vector<char>> regras, std::vector<std::string> cadeias, std::set<char> rt[], char rnt[][255], std::vector<std::vector<char>> regrasTerminais, std::vector<std::vector<char>> regrasNaoTerminais) {
     //mensagem de saída
     printf("\nInstancia %i\n", instancia);
@@ -122,25 +127,23 @@ inline void testarCadeias(int instancia, std::string raiz, std::vector<char> nao
             printf("%s nao e uma palavra valida\n", cadeias[i].c_str());
         }
     }
-}
 
-inline void testarCadeias1(int instancia, std::string raiz, std::vector<char> naoTerminais, std::vector<char> terminais, std::vector<std::vector<char>> regras, std::vector<std::string> cadeias, std::set<char> rt[], char rnt[][255], std::vector<std::vector<char>> regrasTerminais, std::vector<std::vector<char>> regrasNaoTerminais) {
     //mensagem de saída
-    std::cout << "\nInstancia " << instancia << "\n";
-    for (int i = 0; i < cadeias.size(); ++i) {
-        if (validaCadeia(raiz, naoTerminais, terminais, regras, cadeias[i], rt, rnt, regrasTerminais, regrasNaoTerminais)) {
-            std::cout << cadeias[i] << " e uma palavra valida" << "\n";
-        } else {
-            std::cout << cadeias[i] << " nao e uma palavra valida" << "\n";
-        }
-    }
+//        std::cout << "\nInstancia " << instancia << "\n";
+//        for (int i = 0; i < cadeias.size(); ++i) {
+//            if (validaCadeia(raiz, naoTerminais, terminais, regras, cadeias[i], rt, rnt, regrasTerminais, regrasNaoTerminais)) {
+//                std::cout << cadeias[i] << " e uma palavra valida" << "\n";
+//            } else {
+//                std::cout << cadeias[i] << " nao e uma palavra valida" << "\n";
+//            }
+//        }
 }
 
 int main(int argc, char** argv) {
     //Inicio do cronômetro
     Cronometro cronometro;
     cronometro.inicio();
-    
+
     //Comente a duas linhas abaixo para submeter ao spoj
     //Declara o arquivo a ser aberto
     std::ifstream cin("et.in");
@@ -234,17 +237,7 @@ int main(int argc, char** argv) {
         linha = "";
 
         //Testa a cadeia
-        testarCadeias1(instancia, raiz, naoTerminais, terminais, regras, cadeias, rt, rnt, regrasTerminais, regrasNaoTerminais);
-
-        //Limpa terminais
-        for (int i = 0; i < regrasTerminais.size(); ++i) {
-            rt[regrasTerminais[i][1]].clear();
-        }
-
-        //Limpa nao terminais                
-        for (int i = 0; i < regrasNaoTerminais.size(); ++i) {
-            rnt[regrasNaoTerminais[i][1]][regrasNaoTerminais[i][2]] = -1;
-        }
+        testarCadeias(instancia, raiz, naoTerminais, terminais, regras, cadeias, rt, rnt, regrasTerminais, regrasNaoTerminais);
 
         naoTerminais.clear();
         terminais.clear();
@@ -255,11 +248,11 @@ int main(int argc, char** argv) {
 
         instancia += 1;
     }
-    
+
     //Parada do cronometro
-    cronometro.parada();    
-    std::cout << "Tempo gasto:"<< cronometro.tempoGasto();
-    
+    cronometro.parada();
+    std::cout << "Tempo gasto:" << cronometro.tempoGasto();
+
     return 0;
 }
 
