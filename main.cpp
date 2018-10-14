@@ -125,6 +125,10 @@ inline void testarCadeias(int instancia, std::string raiz, std::vector<char> nao
 }
 
 int main(int argc, char** argv) {
+    //Inicio do cronômetro
+    Cronometro cronometro;
+    cronometro.inicio();
+    
     //Comente a duas linhas abaixo para submeter ao spoj
     //Declara o arquivo a ser aberto
     std::ifstream cin("et.in");
@@ -240,6 +244,11 @@ int main(int argc, char** argv) {
 
         instancia += 1;
     }
+    
+    //Parada do cronometro
+    cronometro.parada();    
+    std::cout << "Tempo gasto:"<< cronometro.tempoGasto();
+    
     return 0;
 }
 
