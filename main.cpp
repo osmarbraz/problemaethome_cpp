@@ -4,8 +4,31 @@
 #include <vector>
 #include <set>
 #include <algorithm>
+#include <ctime>
 
-// C++ (gcc 6.3)
+class Cronometro {
+private:
+    long valorInicio;
+    long valorParada;
+    long tempoDiferenca;
+
+public:
+
+    void inicio() {
+        valorInicio = time(0);
+        valorParada = 0;
+        tempoDiferenca = 0;
+    }
+
+    void parada() {
+        valorParada = time(0);
+        tempoDiferenca = valorParada - valorInicio;
+    }
+
+    long tempoGasto() {
+        return tempoDiferenca;
+    }
+};
 
 /**
  * Procura um char em um std::set de char
@@ -67,7 +90,7 @@ inline bool validaCadeia(std::string raiz, std::vector<char> naoTerminais, std::
         tabela[i][i] = rt[cadeia[i]];
     }
 
-//    imprimirMatrizSet(tabela, n, n);
+    //    imprimirMatrizSet(tabela, n, n);
 
     for (int i = 2; i <= n; ++i) {
         for (int inicio = 0; inicio <= n - i; ++inicio) {
@@ -91,16 +114,14 @@ inline bool validaCadeia(std::string raiz, std::vector<char> naoTerminais, std::
 
 inline void testarCadeias(int instancia, std::string raiz, std::vector<char> naoTerminais, std::vector<char> terminais, std::vector<std::vector<char>> regras, std::vector<std::string> cadeias, std::set<char> rt[], char rnt[][255], std::vector<std::vector<char>> regrasTerminais, std::vector<std::vector<char>> regrasNaoTerminais) {
     //mensagem de saída
-    std::cout << "Instancia " << instancia << std::endl;
+    printf("\nInstancia %i\n", instancia);
     for (int i = 0; i < cadeias.size(); ++i) {
-
         if (validaCadeia(raiz, naoTerminais, terminais, regras, cadeias[i], rt, rnt, regrasTerminais, regrasNaoTerminais)) {
-            std::cout << cadeias[i] << " e uma palavra valida" << std::endl;
+            printf("%s e uma palavra valida\n", cadeias[i].c_str());
         } else {
-            std::cout << cadeias[i] << " nao e uma palavra valida" << std::endl;
+            printf("%s nao e uma palavra valida\n", cadeias[i].c_str());
         }
     }
-    std::cout << std::endl;
 }
 
 int main(int argc, char** argv) {
