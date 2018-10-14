@@ -187,14 +187,12 @@ int main(int argc, char** argv) {
         for (int i = 0; i < linha.size(); ++i) {
             naoTerminais.push_back(linha[i]);
         }
-        linha = "";
 
         //leitura dos terminais
         getline(cin, linha);
         for (int i = 0; i < linha.size(); ++i) {
             terminais.push_back(linha[i]);
         }
-        linha = "";
 
         //leitura das regras        
         getline(cin, linha);
@@ -226,15 +224,12 @@ int main(int argc, char** argv) {
             getline(cin, linha);
         }
 
-        linha = "";
-
         //cadeias
         getline(cin, linha);
         while (linha != "#") {
             cadeias.push_back(linha);
             getline(cin, linha);
         }
-        linha = "";
 
         //Testa a cadeia
         testarCadeias(instancia, raiz, naoTerminais, terminais, regras, cadeias, rt, rnt, regrasTerminais, regrasNaoTerminais);
