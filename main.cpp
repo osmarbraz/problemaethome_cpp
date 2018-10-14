@@ -124,6 +124,18 @@ inline void testarCadeias(int instancia, std::string raiz, std::vector<char> nao
     }
 }
 
+inline void testarCadeias1(int instancia, std::string raiz, std::vector<char> naoTerminais, std::vector<char> terminais, std::vector<std::vector<char>> regras, std::vector<std::string> cadeias, std::set<char> rt[], char rnt[][255], std::vector<std::vector<char>> regrasTerminais, std::vector<std::vector<char>> regrasNaoTerminais) {
+    //mensagem de saída
+    std::cout << "\nInstancia " << instancia << "\n";
+    for (int i = 0; i < cadeias.size(); ++i) {
+        if (validaCadeia(raiz, naoTerminais, terminais, regras, cadeias[i], rt, rnt, regrasTerminais, regrasNaoTerminais)) {
+            std::cout << cadeias[i] << " e uma palavra valida" << "\n";
+        } else {
+            std::cout << cadeias[i] << " nao e uma palavra valida" << "\n";
+        }
+    }
+}
+
 int main(int argc, char** argv) {
     //Inicio do cronômetro
     Cronometro cronometro;
@@ -134,7 +146,6 @@ int main(int argc, char** argv) {
     std::ifstream cin("et.in");
 
     cin.is_open();
-
 
     //Contador de instacias
     int instancia = 1;
@@ -153,13 +164,13 @@ int main(int argc, char** argv) {
         //Vetor de char para os terminais        
         std::vector<char> terminais;
 
-        //Declara a tabela das regras terminais e instancia as listas
-
+        //Declara o conjunto das regras terminais
         std::set<char> rt[255];
 
         //Declara a tabela das regras nao terminais
         char rnt[255][255];
 
+        //Declara os vetores
         std::vector<std::vector <char>> regras;
         std::vector<std::vector <char>> regrasNaoTerminais;
         std::vector<std::vector <char>> regrasTerminais;
@@ -223,7 +234,7 @@ int main(int argc, char** argv) {
         linha = "";
 
         //Testa a cadeia
-        testarCadeias(instancia, raiz, naoTerminais, terminais, regras, cadeias, rt, rnt, regrasTerminais, regrasNaoTerminais);
+        testarCadeias1(instancia, raiz, naoTerminais, terminais, regras, cadeias, rt, rnt, regrasTerminais, regrasNaoTerminais);
 
         //Limpa terminais
         for (int i = 0; i < regrasTerminais.size(); ++i) {
